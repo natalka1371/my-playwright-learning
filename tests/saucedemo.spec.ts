@@ -13,7 +13,7 @@ test.describe("Login", () => {
         await page.getByPlaceholder("Password").fill("secret_sauce");
         await page.getByRole("button", { name: "Login" }).click();
 
-        await expect(page, "Should redirect to inventory page after successful login").toHaveURL(/inventory/);
+        await expect(page, "User should be redirected to inventory page after successful login").toHaveURL(/inventory/);
     });
 
     test("Negative login", async ({ page }) => {
