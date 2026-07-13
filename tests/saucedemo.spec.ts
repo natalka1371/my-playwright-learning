@@ -36,6 +36,17 @@ test.describe("Login", () => {
         ).toBeVisible();
     });
 
+    test("Negative login - locked out user", async ({ page }) => {
+        await page.getByPlaceholder("Username").fill("locked_out_user");
+        await page.getByPlaceholder("Password").fill("secret_sauce");
+        await page.getByRole("button", { name: "Login" }).click();
+
+        await expect(
+            page.getByTestId("error"),
+            "Locked out user should see the exact lockout error message"
+        ).toHaveText("Epic sadface: Sorry, this user has been locked out.");
+    });
+
 });
 
 test.describe("Cart", () => {
