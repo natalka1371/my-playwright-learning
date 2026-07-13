@@ -13,7 +13,7 @@ test.describe("Login", () => {
         await page.getByPlaceholder("Password").fill("secret_sauce");
         await page.getByRole("button", { name: "Login" }).click();
 
-        await expect(page, "Should redirect to inventory page after successful login").toHaveURL(/inventory/);
+        await expect(page, "User should be redirected to inventory page after successful login").toHaveURL(/inventory/);
     });
 
     test("Negative login", async ({ page }) => {
@@ -34,6 +34,17 @@ test.describe("Login", () => {
             page.getByTestId("error"),
             "Validation error should appear"
         ).toBeVisible();
+    });
+
+    test("Negative login - locked out user", async ({ page }) => {
+        await page.getByPlaceholder("Username").fill("locked_out_user");
+        await page.getByPlaceholder("Password").fill("secret_sauce");
+        await page.getByRole("button", { name: "Login" }).click();
+
+        await expect(
+            page.getByTestId("error"),
+            "Locked out user should see the exact lockout error message"
+        ).toHaveText("Epic sadface: Sorry, this user has been locked out.");
     });
 
 });
