@@ -40,6 +40,20 @@ test('Empty form validation', async ({ page }) => {
     
     await expect(page.getByTestId('error')).toContainText('Username is required');
 });
+
+test('Locked out user validation', async ({ page }) => {
+    await page.getByPlaceholder('Username').fill('locked_out_user');
+    await page.getByPlaceholder('Password').fill('secret_sauce');
+    await page.getByRole('button', { name: 'Login' }).click();
+
+    await expect(
+        page.getByTestId('error'),
+        "Error should appear for locked out user"
+    ).toBeVisible();
+
+    await expect(page.getByTestId('error')).toHaveText('Epic sadface: Sorry, this user has been locked out.');
+});
+
 });
 
 test.describe('Adding/removing products functionality', () => {
