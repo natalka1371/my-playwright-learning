@@ -3,6 +3,7 @@ import { type Locator, type Page } from "@playwright/test";
 export class CartPage {
   readonly page: Page;
   readonly removeButtons: Locator;
+  readonly shoppingCartBadge: Locator;
   readonly continueShoppingButton: Locator;
   readonly checkoutButton: Locator;
   readonly productNames: Locator;
@@ -10,6 +11,7 @@ export class CartPage {
   constructor(page: Page) {
     this.page = page;
     this.removeButtons = page.getByRole("button", { name: "Remove" });
+    this.shoppingCartBadge = page.getByTestId("shopping-cart-badge");
     this.continueShoppingButton = page.getByRole("button", { name: "Continue Shopping" });
     this.checkoutButton = page.getByRole("button", { name: "Checkout" });
     this.productNames = page.getByTestId("inventory-item-name");
