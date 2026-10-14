@@ -12,4 +12,12 @@ export const users = {
     // Invalid credentials (negative login scenarios)
     wrongPassword: {username: "standard_user", password: "wrong_password"},
     unknownUser: {username: "unknown_user", password: PASSWORD},
+};
+
+export const checkoutInfo = {
+    valid: {firstName: "John", lastName: "Doe", zipCode: "12345"},
+    missingFirstName: {firstName: "", lastName: "Doe", zipCode: "12345"},
+    missingLastName: {firstName: "John", lastName: "", zipCode: "12345"},
+    missingZipCode: {firstName: "John", lastName: "Doe", zipCode: ""},  
+    missingAllFields: {firstName: "", lastName: "", zipCode: ""},
 }
