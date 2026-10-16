@@ -15,7 +15,6 @@ export class CheckoutPage {
   readonly finishButton: Locator;
   readonly productNames: Locator;
   readonly itemTotal: Locator;
-  readonly shoppingCartBadge: Locator;
 
   // Step 3 - Complete
   readonly successMessage: Locator;
@@ -35,7 +34,6 @@ export class CheckoutPage {
     this.finishButton = page.getByRole("button", { name: "Finish" });
     this.productNames = page.getByTestId("inventory-item-name");
     this.itemTotal = page.getByTestId("checkout-subtotal");
-    this.shoppingCartBadge = page.getByTestId("shopping-cart-badge");
 
     this.successMessage = page.getByTestId("complete-header");
     this.backHomeButton = page.getByRole("button", { name: "Back Home" }); 
