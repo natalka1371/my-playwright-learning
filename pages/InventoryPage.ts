@@ -8,6 +8,7 @@ export class InventoryPage {
   readonly shoppingCartBadge: Locator;
   readonly shoppingCartLink: Locator;
   readonly sortDropdown: Locator;
+  readonly itemPrices: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +18,7 @@ export class InventoryPage {
     this.shoppingCartBadge = page.getByTestId("shopping-cart-badge");
     this.shoppingCartLink = page.getByTestId("shopping-cart-link");
     this.sortDropdown = page.getByTestId("product-sort-container");
+    this.itemPrices = page.getByTestId("inventory-item-price");
   }
 
   async addProductToCart() {
@@ -30,4 +32,9 @@ export class InventoryPage {
   async openShoppingCart() {
     await this.shoppingCartLink.click();
   }
+
+  async sortProductsByPriceLowToHigh() {
+    await this.sortDropdown.selectOption("lohi");
+  }
+
 }
