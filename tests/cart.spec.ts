@@ -55,7 +55,7 @@ test.describe("Adding and removing products from cart", () => {
     await cartPage.removeProductFromCart();
 
     await expect(
-      cartPage.shoppingCartBadge,
+      inventoryPage.shoppingCartBadge,
       "Shopping cart badge should not be visible after removing the product",
     ).not.toBeVisible();
 
@@ -125,7 +125,7 @@ test.describe("Adding and removing products from cart", () => {
     await cartPage.removeProductFromCart();
 
     await expect(
-      cartPage.shoppingCartBadge,
+      inventoryPage.shoppingCartBadge,
       "Shopping cart badge should show 1 item after removing one product",
     ).toHaveText("1");
 
