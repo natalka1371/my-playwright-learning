@@ -79,11 +79,15 @@ test.describe("Adding and removing products from cart", () => {
       inventoryPage.shoppingCartBadge,
       "Shopping cart badge should not be visible after removing the product",
     ).not.toBeVisible();
-  }); 
+  });
 
   test("User can add multiple products to cart", async () => {
-    const firstProductName = await inventoryPage.productNames.first().innerText();
-    const secondProductName = await inventoryPage.productNames.nth(1).innerText();
+    const firstProductName = await inventoryPage.productNames
+      .first()
+      .innerText();
+    const secondProductName = await inventoryPage.productNames
+      .nth(1)
+      .innerText();
 
     await inventoryPage.addProductToCart();
     await inventoryPage.addProductToCart();
@@ -136,52 +140,56 @@ test.describe("Adding and removing products from cart", () => {
   });
 
   test.describe("Navigation from cart page", () => {
-  let inventoryPage: InventoryPage;
-  let cartPage: CartPage;
+    let inventoryPage: InventoryPage;
+    let cartPage: CartPage;
 
-  test.beforeEach(async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    inventoryPage = new InventoryPage(page);
-    cartPage = new CartPage(page);
+    test.beforeEach(async ({ page }) => {
+      const loginPage = new LoginPage(page);
+      inventoryPage = new InventoryPage(page);
+      cartPage = new CartPage(page);
 
-    await loginPage.open();
-    await loginPage.login(users.standard.username, users.standard.password);
-    await expect(page, "User should be redirected to inventory page").toHaveURL(
-      /inventory/,
-    );
+      await loginPage.open();
+      await loginPage.login(users.standard.username, users.standard.password);
+      await expect(
+        page,
+        "User should be redirected to inventory page",
+      ).toHaveURL(/inventory/);
+    });
+
+    test("User can go back to inventory page from cart page", async ({
+      page,
+    }) => {
+      await inventoryPage.addProductToCart();
+      await inventoryPage.openShoppingCart();
+
+      await expect(
+        cartPage.productNames,
+        "Cart page should show the added product",
+      ).toHaveCount(1);
+
+      await cartPage.navigateBackToInventory();
+
+      await expect(
+        page,
+        "User should be redirected back to inventory page",
+      ).toHaveURL(/inventory/);
+    });
+
+    test("User can proceed to checkout from cart page", async ({ page }) => {
+      await inventoryPage.addProductToCart();
+      await inventoryPage.openShoppingCart();
+
+      await expect(
+        cartPage.productNames,
+        "Cart page should show the added product",
+      ).toHaveCount(1);
+
+      await cartPage.proceedToCheckout();
+
+      await expect(
+        page,
+        "User should be redirected to checkout page",
+      ).toHaveURL(/checkout-step-one/);
+    });
   });
-
-  test("User can go back to inventory page from cart page", async ({ page }) => {
-    await inventoryPage.addProductToCart();
-    await inventoryPage.openShoppingCart();
-
-    await expect(
-      cartPage.productNames,
-      "Cart page should show the added product",
-    ).toHaveCount(1);
-
-    await cartPage.navigateBackToInventory();
-
-    await expect(
-      page, "User should be redirected back to inventory page"
-    ).toHaveURL(/inventory/); 
-  });
-
-  test("User can proceed to checkout from cart page", async ({ page }) => {
-    await inventoryPage.addProductToCart();
-    await inventoryPage.openShoppingCart();
-
-    await expect(
-      cartPage.productNames,
-      "Cart page should show the added product",
-    ).toHaveCount(1);
-
-    await cartPage.proceedToCheckout();
-
-    await expect(
-      page, "User should be redirected to checkout page"
-    ).toHaveURL(/checkout-step-one/);
-  });
-});
-
 });
