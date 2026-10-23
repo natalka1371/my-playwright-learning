@@ -11,8 +11,8 @@ Login → product sorting → product selection → cart → checkout → back h
 ### Login
 - Valid user can log in
 - Locked user cannot log in
-- User can not log in with wrong password
-- User can not log in with unknown username
+- User cannot log in with wrong password
+- User cannot log in with unknown username
 - Empty login form shows an error
 - Missing username shows an error
 - Missing password shows an error
@@ -21,7 +21,7 @@ Login → product sorting → product selection → cart → checkout → back h
 - User can sort products by price
 
 ### Cart
-- User can add  one product to cart
+- User can add one product to cart
 - User can remove product from cart
 - User can remove added product from inventory page
 - User can add multiple products to cart
@@ -53,6 +53,7 @@ Login → product sorting → product selection → cart → checkout → back h
     - `users.ts` - usernames and passwords for login and checkout
     - `errors.ts` - expected error messages for login and checkout forms
 - `playwright.config.ts` — configuration
+- `.github/workflows/playwright.yml` - CI workflow (GitHub Actions)
 
 ## How to run
 ```bash
@@ -62,6 +63,10 @@ npx playwright test
 npx playwright show-report
 ```
 
+## CI
+Tests run automatically in GitHub Actions on every push and pull request to `main`/`master`.
+The HTML report is uploaded as an artifact (`playwright-report`) and kept for 30 days.
+
 ## Notes
 - No hard waits (`waitForTimeout`) are used
 - Tests use semantic locators (`getByRole`, `getByTestId`, `getByPlaceholder`)
@@ -70,3 +75,5 @@ npx playwright show-report
 ## Known limitations
 - This suite covers only the selected user journey
 - It does not cover all possible edge cases
+- Sorting is tested only for "Price (low to high)"
+- The following SauceDemo users are not covered: `problem_user`, `performance_glitch_user`, `error_user`, `visual_user`
