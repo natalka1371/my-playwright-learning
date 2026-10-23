@@ -53,6 +53,7 @@ Login → product sorting → product selection → cart → checkout → back h
     - `users.ts` - usernames and passwords for login and checkout
     - `errors.ts` - expected error messages for login and checkout forms
 - `playwright.config.ts` — configuration
+- `tsconfig.json` - Typescript configuration
 - `.github/workflows/playwright.yml` - CI workflow (GitHub Actions)
 
 ## How to run
